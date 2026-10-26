@@ -39,7 +39,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // CRITICAL FIX: Allows preflight requests
-                .requestMatchers("/api/auth/**").permitAll()
+                // FIX: Added PDF upload and viewing endpoints back so they do not get blocked
+                .requestMatchers("/api/auth/**", "/api/jobs/*/resume", "/api/jobs/*/apply-with-file").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
